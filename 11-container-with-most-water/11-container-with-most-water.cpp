@@ -9,10 +9,12 @@ public:
         {
             int w = j - i;
             int h = min(height[i], height[j]);
+
             if ((w * h) > maxA)
             {
                 maxA = w * h;
             }
+
             if (height[i] >= height[j])
                 j--;
             else
