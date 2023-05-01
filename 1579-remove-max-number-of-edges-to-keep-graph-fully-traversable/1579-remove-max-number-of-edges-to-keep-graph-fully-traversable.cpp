@@ -9,7 +9,12 @@ public:
     }
     
     int Find(int x){
-        return parent[x] = parent[x] == x ? x : Find(parent[x]);
+        if (parent[x] != x){
+            return Find(parent[x]);
+        }
+        else{
+            return x;
+        }
     }
     
     bool Union(int x, int y){
