@@ -13,24 +13,19 @@
 class Solution
 {
 public:
-    vector<int> nodes;
-    void inorder(TreeNode *root)
+    bool helper(TreeNode *root, long long min, long long max)
     {
-        if (root->left)
-            inorder(root->left);
-        nodes.push_back(root->val);
-        if (root->right)
-            inorder(root->right);
+        if (root == NULL)
+            return true;
+
+        if ((root->val >= max) || (root->val <= min))
+            return false;
+
+        return helper(root->left, min, root->val) && helper(root->right, root->val, max);
     }
 
     bool isValidBST(TreeNode *root)
     {
-        inorder(root);
-        for (int i = 0; i < nodes.size() - 1; i++)
-        {
-            if (nodes[i] >= nodes[i + 1])
-                return false;
-        }
-        return true;
+        return helper(root, LONG_MIN, LONG_MAX);
     }
 };
