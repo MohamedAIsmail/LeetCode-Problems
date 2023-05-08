@@ -2,7 +2,7 @@ class Solution {
 public:
     string getHint(string secret, string guess)
     {
-        unordered_map<int, int> map;
+        map<int, int> map;
         int bullCtr = 0, cowsCtr = 0;
 
         for (int i = 0; i < secret.size(); i++)
