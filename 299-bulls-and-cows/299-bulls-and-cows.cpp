@@ -4,29 +4,26 @@ public:
     {
         unordered_map<int, int> map;
         int bullCtr = 0, cowsCtr = 0;
-        vector<int> secretCtr(10, 0);
 
         for (int i = 0; i < secret.size(); i++)
         {
             if (secret[i] == guess[i])
             {
                 bullCtr++;
-                guess.erase(i, 1);
-                secret.erase(i, 1);
-                i--;
+                map[i]++;
             }
             else
             {
-                map[secret[i]]++;
+                map[secret[i] + 1000]++;
             }
         }
 
         for (int i = 0; i < secret.size(); i++)
         {
-            if (map[guess[i]])
+            if (map[guess[i] + 1000] && map[i] < 1)
             {
                 cowsCtr++;
-                map[guess[i]]--;
+                map[guess[i] + 1000]--;
             }
         }
 
