@@ -1,37 +1,62 @@
 class Solution
 {
-    int ans = INT_MAX, islandCtr = 2;
     vector<pair<int, int>> first, second;
+    int ans = 30000, islandCtr = 1;
 
 public:
-    void DFS(int i, int j, int no, vector<vector<int>> &grid)
+    void DFS(int i, int j, stack<pair<int, int>> st, vector<vector<int>> &grid, vector<pair<int, int>> &vec)
     {
-        if (i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] != 1)
-            return;
+        st.push({i, j});
+        grid[i][j] = 4;
 
-        grid[i][j] = no;
+        while (!st.empty())
+        {
+            pair<int, int> temp = st.top();
+            vec.push_back(temp);
+            st.pop();
+            int row = temp.first, col = temp.second;
 
-        if (no == 2)
-            first.push_back({i, j});
-        else
-            second.push_back({i, j});
+            if (row > 0 && grid[row - 1][col] == 1)
+            {
+                grid[row - 1][col] = 4;
+                st.push({row - 1, col});
+            }
+            if (col > 0 && grid[row][col - 1] == 1)
+            {
+                grid[row][col - 1] = 4;
+                st.push({row, col - 1});
+            }
 
-        DFS(i + 1, j, no, grid);
-        DFS(i - 1, j, no, grid);
-        DFS(i, j + 1, no, grid);
-        DFS(i, j - 1, no, grid);
+            if (row + 1 < grid.size() && grid[row + 1][col] == 1)
+            {
+                grid[row + 1][col] = 4;
+                st.push({row + 1, col});
+            }
+
+            if (col + 1 < grid[0].size() && grid[row][col + 1] == 1)
+            {
+                grid[row][col + 1] = 4;
+                st.push({row, col + 1});
+            }
+        }
     }
-
     int shortestBridge(vector<vector<int>> &grid)
     {
-
         for (int i = 0; i < grid.size(); i++)
         {
             for (int j = 0; j < grid[0].size(); j++)
             {
+                stack<pair<int, int>> st;
                 if (grid[i][j] == 1)
                 {
-                    DFS(i, j, islandCtr, grid);
+                    if (islandCtr == 1)
+                    {
+                        DFS(i, j, st, grid, first);
+                    }
+                    else
+                    {
+                        DFS(i, j, st, grid, second);
+                    }
                     islandCtr++;
                 }
             }
