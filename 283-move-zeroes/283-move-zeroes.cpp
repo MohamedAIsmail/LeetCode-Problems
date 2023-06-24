@@ -6,15 +6,12 @@ public:
 
         for (int i = 0; i < nums.size(); i++)
         {
-            temp = 0;
             if (nums[i] == 0)
             {
                 numZeros++;
                 continue;
             }
-            else if (numZeros == 0)
-                continue;
-            else
+            else if (numZeros > 0)
             {
                 nums[i - numZeros] = nums[i];
                 nums[i] = 0;
