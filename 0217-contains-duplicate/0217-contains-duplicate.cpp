@@ -1,16 +1,15 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        set<int> s;
+        int n = nums.size();
+        map<int, int> freq;
         for(int i=0; i<nums.size(); i++){
-            s.insert(nums[i]);
+            freq[nums[i]]++;
+            if(freq[nums[i]] > 1){
+                return true;
+            }
         }
-        if(s.size() == nums.size()){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return false;
             
     }
 };
