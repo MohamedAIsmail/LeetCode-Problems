@@ -12,26 +12,29 @@ class Solution {
 public:
     ListNode *deleteDuplicates(ListNode *head)
     {
-        // Base cases
-        if(!head) return head;
-        int arr[201] = {0}; // freq array
-        
-        arr[head->val + 100] = 1;
-        
-        ListNode *curr = head->next, *previous = head;
+       if(head==NULL  ||  head->next==NULL) return head;
 
-        while(curr){
-            if(arr[curr->val + 100] == 1){
-                previous->next = curr->next;
-                curr = curr->next;
-            }   
+        ListNode*prev=NULL;
+        ListNode*temp=NULL;
+        ListNode*curr=head;
+
+        while(curr!=NULL){
+            if(prev==NULL){
+                prev=curr;
+                temp=prev;
+                curr=curr->next;
+                continue;
+            }
+            if(curr->val == prev->val){
+                curr=curr->next;
+                if(curr==NULL) prev->next=NULL;
+            }
             else{
-                arr[curr->val + 100] = 1;
-                previous = previous->next;
-                curr = curr->next;
+                prev->next=curr;
+                prev=curr;
+                curr=curr->next;
             }
         }
-
-        return head;
+        return temp;
     }
 };
