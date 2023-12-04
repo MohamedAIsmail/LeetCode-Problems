@@ -2,25 +2,39 @@ class Solution {
 public:
     vector<string> letterCombinations(string digits)
     {
-        vector<string> res;
+        vector<string> result;
         if (digits.empty())
-            return res;
-            
-        vector<string> dict = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        res.push_back("");
-        for (int i = 0; i < digits.size(); i++)
         {
-            vector<string> temp;
-            string str = dict[digits[i] - '2'];
-            for (int j = 0; j < str.size(); j++)
+            return result;
+        }
+
+        const vector<string> digitToLetters = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+        result.push_back("");
+
+        for (char digit : digits)
+        {
+            int digitIndex = digit - '2';
+            if (digitIndex < 0 || digitIndex >= digitToLetters.size())
             {
-                for (int k = 0; k < res.size(); k++)
+                // Handle invalid digits
+                return result;
+            }
+
+            const string &letters = digitToLetters[digitIndex];
+
+            vector<string> temp;
+
+            for (char letter : letters)
+            {
+                for (const string &prevCombination : result)
                 {
-                    temp.push_back(res[k] + str[j]);
+                    temp.push_back(prevCombination + letter);
                 }
             }
-            res = temp;
+
+            result = temp;
         }
-        return res;
+        return result;
     }
 };
